@@ -5,33 +5,30 @@ import java.util.*;
 public class MainPanel extends JPanel {
 
 	// Current configuration
-	private Cell[][] _cells;
+	private Cell[][] cells;
 
 	// Backup configuration
-	private Cell[][] _backupCells;
+	private Cell[][] backupCells;
+	
+	private int size = 0;
 
-	private int _size = 0;
+	private int maxCount = 50000000;
 
-	private int _maxCount = 50000000;
+	public int r = 1000;
 
-	public int _r = 1000;
-
-	private boolean _running = false;
+	private boolean running = false;
 
 	public int getCellsSize() {
-		return _size;
+		return size;
 	}
-
 	public void setCells(Cell[][] cells) {
-		_cells = cells;
+		cells = cells;
 	}
-
 	public Cell[][] getCells() {
-		return _cells;
+		return cells;
 	}
 
 	public int getNumNeighbors(int x, int y) {
-		int size = _size;
 		int leftX = (x - 1) % size;
 		int rightX = (x + 1) % size;
 		int upY = (y - 1) % size;
@@ -52,28 +49,28 @@ public class MainPanel extends JPanel {
 
 		int numNeighbors = 0;
 
-		if (_cells[leftX][upY].getAlive()) {
+		if (cells[leftX][upY].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[leftX][downY].getAlive()) {
+		if (cells[leftX][downY].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[leftX][y].getAlive()) {
+		if (cells[leftX][y].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[rightX][upY].getAlive()) {
+		if (cells[rightX][upY].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[rightX][downY].getAlive()) {
+		if (cells[rightX][downY].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[rightX][y].getAlive()) {
+		if (cells[rightX][y].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[x][upY].getAlive()) {
+		if (cells[x][upY].getAlive()) {
 			numNeighbors++;
 		}
-		if (_cells[x][downY].getAlive()) {
+		if (cells[x][downY].getAlive()) {
 			numNeighbors++;
 		}
 
@@ -82,30 +79,33 @@ public class MainPanel extends JPanel {
 	}
 
 	public boolean iterateCell(int x, int y) {
-		boolean toReturn = false;
-		boolean alive = _cells[x][y].getAlive();
-		int numNeighbors = getNumNeighbors(x, y);
-		if (alive) {
-			if (numNeighbors < 2 || numNeighbors > 3) {
-				toReturn = false;
-			} else {
-				toReturn = true;
+		boolean reslut=false;
+		System.out.println(cells[x][y]);
+		boolean live=cells[x][y].getAlive();
+		int NumNeighbors=getNumNeighbors(x, y);
+		if (live) {
+			if (NumNeighbors<2||NumNeighbors>3) {
+				reslut=false;
 			}
-		} else {
-			if (numNeighbors == 3) {
-				toReturn = true;
-			} else {
-				toReturn = false;
+			else {
+				reslut=true;
 			}
 		}
-	
-		return toReturn;
+		else {
+			if (NumNeighbors==3) {
+				reslut=true;
+			}
+			else {
+				reslut=false;
+			}
+		}
+		return reslut;
 	}
 
 	public void displayIteration(boolean[][] nextIter) {
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
-				_cells[j][k].setAlive(nextIter[j][k]);
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
+				cells[j][k].setAlive(nextIter[j][k]);
 			}
 		}
 		setVisible(true);
@@ -117,12 +117,18 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void calculateNextIteration() {
-		boolean[][] nextIter = new boolean[_size][_size];
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
+		boolean[][] nextIter = new boolean[size][size];
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
 				nextIter[j][k] = iterateCell(j, k);
 			}
 		}
+		for (int i = 0; i < maxCount; i++) {
+			r += (i % size) % maxCount;
+			r += maxCount;
+		}
+		r = 1000;
+
 		displayIteration(nextIter);
 	}
 
@@ -131,11 +137,11 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void backup() {
-		_backupCells = new Cell[_size][_size];
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
-				_backupCells[j][k] = new Cell();
-				_backupCells[j][k].setAlive(_cells[j][k].getAlive());
+		backupCells = new Cell[size][size];
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
+				backupCells[j][k] = new Cell();
+				backupCells[j][k].setAlive(cells[j][k].getAlive());
 			}
 		}
 	}
@@ -150,10 +156,10 @@ public class MainPanel extends JPanel {
 		System.out.println("Backup cells");
 
 		try {
-			for (int j = 0; j < _size; j++) {
-				for (int k = 0; k < _size; k++) {
+			for (int j = 0; j < size; j++) {
+				for (int k = 0; k < size; k++) {
 
-					if (_backupCells[j][k].getAlive()) {
+					if (backupCells[j][k].getAlive()) {
 						System.out.print("X");
 					} else {
 						System.out.print(".");
@@ -164,10 +170,10 @@ public class MainPanel extends JPanel {
 
 			System.out.println("Current cells:");
 
-			for (int j = 0; j < _size; j++) {
-				for (int k = 0; k < _size; k++) {
+			for (int j = 0; j < size; j++) {
+				for (int k = 0; k < size; k++) {
 
-					if (_cells[j][k].getAlive()) {
+					if (cells[j][k].getAlive()) {
 						System.out.print("X");
 					} else {
 						System.out.print(".");
@@ -193,12 +199,12 @@ public class MainPanel extends JPanel {
 
 		String toWrite = "";
 
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
-				if (_cells[j][k].getAlive()) {
-					toWrite += _cells[j][k].toString();
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
+				if (cells[j][k].getAlive()) {
+					toWrite += cells[j][k].toString();
 				} else {
-					toWrite += _cells[j][k].toString();
+					toWrite += cells[j][k].toString();
 				}
 
 			}
@@ -221,8 +227,8 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void runContinuous() {
-		_running = true;
-		while (_running) {
+		running = true;
+		while (running) {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException iex) {
@@ -237,7 +243,7 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void stop() {
-		_running = false;
+		running = false;
 	}
 
 	/**
@@ -249,10 +255,10 @@ public class MainPanel extends JPanel {
 		// 2-D array to return. Remember everything
 		// is false by default for boolean arrays!
 
-		boolean[][] toReturn = new boolean[_size][_size];
+		boolean[][] toReturn = new boolean[size][size];
 
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
 				if (cells[j][k].getAlive()) {
 					toReturn[j][k] = true;
 				} else {
@@ -271,7 +277,7 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void undo() {
-		displayIteration(convertToBoolean(_backupCells));
+		displayIteration(convertToBoolean(backupCells));
 	}
 
 	/**
@@ -279,9 +285,9 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void clear() {
-		for (int j = 0; j < _size; j++) {
-			for (int k = 0; k < _size; k++) {
-				_cells[j][k].reset();
+		for (int j = 0; j < size; j++) {
+			for (int k = 0; k < size; k++) {
+				cells[j][k].reset();
 			}
 		}
 		// Need to call setVisible() since
@@ -295,14 +301,14 @@ public class MainPanel extends JPanel {
 	 */
 
 	public void load(ArrayList<String> lines) {
-		boolean[][] loaded = new boolean[_size][_size];
+		boolean[][] loaded = new boolean[size][size];
 
-		for (int j = 0; j < _size; j++) {
+		for (int j = 0; j < size; j++) {
 			String l = lines.get(j);
-			for (int k = 0; k < _size; k++) {
+			for (int k = 0; k < size; k++) {
 
 				// Reset the "been alive" count
-				_cells[j][k].resetBeenAlive();
+				cells[j][k].resetBeenAlive();
 
 				// For each line, get each character.
 				// If it's a '.', the cell stays
@@ -311,10 +317,10 @@ public class MainPanel extends JPanel {
 				// an 'X' for alive and throw an
 				// error if we get an unexpected char.
 				if (l.charAt(k) == '.') {
-					_cells[j][k].setAlive(false);
+					cells[j][k].setAlive(false);
 					loaded[j][k] = false;
 				} else {
-					_cells[j][k].setAlive(true);
+					cells[j][k].setAlive(true);
 					loaded[j][k] = true;
 				}
 			}
@@ -329,17 +335,22 @@ public class MainPanel extends JPanel {
 
 	public MainPanel(int size) {
 		super();
-		_size = size;
-		setLayout(new GridLayout(size, size));
-		_cells = new Cell[size][size];
+		this.size = size;
+		this.cells = new Cell[size][size];
 		for (int j = 0; j < size; j++) {
 			for (int k = 0; k < size; k++) {
-				_cells[j][k] = new Cell();
-				this.add(_cells[j][k]);
-				_cells[j][k].setAlive(false);
+				cells[j][k] = new Cell();
+				this.add(cells[j][k]);
+				cells[j][k].setAlive(false);
 			}
 		}
-
+		setLayout(new GridLayout(size, size));
 	}
-
+	
+	public MainPanel(Cell[][] cells) {
+		super();
+		this.size = cells.length;
+		this.cells = cells;
+		setLayout(new GridLayout(size, size));
+	}
 }
