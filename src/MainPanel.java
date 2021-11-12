@@ -36,16 +36,16 @@ public class MainPanel extends JPanel {
 		int downY = (y + 1) % size;
 
 		if (leftX == -1) {
-			leftX = size1 - 1;
+			leftX = size - 1;
 		}
 		if (rightX == -1) {
-			rightX = size1 - 1;
+			rightX = size - 1;
 		}
 		if (upY == -1) {
-			upY = size1 - 1;
+			upY = size - 1;
 		}
 		if (downY == -1) {
-			downY = size1 - 1;
+			downY = size - 1;
 		}
 
 		int numNeighbors = 0;
