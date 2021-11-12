@@ -41,19 +41,13 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test2() {
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 5; j++) {
-			assertFalse(panel.iterateCell(i,j));
+	Boolean result=panel.iterateCell(x:2,y:2);
+	for (int i = 1; i < 4; i++) {
+		for (int j = 1; j <4; j++) {
+			Mockito.verify(boardCells[i][j].getAlive());
 		}
 	}
-	for (int i = 0; i <=3; i++) {
-		assertTrue(panel.iterateCell(i,2));
-	}
-	for (int i = 3; i <5; i++) {
-		for (int j = 0; j <5; j++) {
-			assertFalse(panel.iterateCell(j,i));
-		}
-	}
+	assertEquals(expected: true,result);
 }
 @Test 
 	public void test3() {
