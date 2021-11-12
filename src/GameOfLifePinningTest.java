@@ -79,10 +79,9 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test3() {
-	Cell[][] boardCells=new Cell[5][5];
 	Cell alive=new Cell(true);
 	Cell dead=new Cell(false);
-	assertEquals(alive.toString(),"x");
+	assertEquals(alive.toString(),"X");
 	assertEquals(dead.toString(), ".");
 }
 	/* TODO: Write the three pinning unit tests for the three optimized methods */
