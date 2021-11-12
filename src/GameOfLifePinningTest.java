@@ -3,6 +3,8 @@ import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -22,13 +24,20 @@ public class GameOfLifePinningTest {
 		}
 		panel.setCells(cell);
 }
+@After
+	public void teardown() {
+		// TODO Auto-generated method stub
+	Cell=null;
+	panel=null;
+	boardCells=null;
+	}
 @Test 
 	public void test1() {
 	Cell[][] boardCells=new Cell[5][5];
 	panel.calculateNextIteration();
 	for(int i=0;i<2;i++) {
 		for(int j=0;j<5;j++) {
-			assertFalse(cell[j][i].getAlive());
+			assertFalse(boardCells[j][i].getAlive());
 		}
 	}
 	for(int i=1;i<=3;i++) {
@@ -36,21 +45,21 @@ public class GameOfLifePinningTest {
 	}
 		for(int i=3;i<5;i++) {
 			for(int j=0;j<5;j++) {
-				assertFasle(cell[j][i].getAlive());
+				assertFasle(boardCells[j][i].getAlive());
 			}
 		}
 		panel.calculateNextIteration();
 		for(int i=0;i<2;i++) {
 			for(int j=0;j<5;j++) {
-				assertFasle(cell[j][i].getAlive());
+				assertFasle(boardCells[j][i].getAlive());
 			}
 		}
 		for(int i=1;i<=3;i++) {
-			assertTrue(cell[2][i].getAlive());
+			assertTrue(boardCells[2][i].getAlive());
 		}
 		for(int i=3;i<5;i++) {
 			for(int j=0;j<5;j++) {
-				assertFalse(cell[j][i].getAlive());
+				assertFalse(boardCells[j][i].getAlive());
 			}
 		}
 }
