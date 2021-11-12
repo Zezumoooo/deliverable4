@@ -35,7 +35,7 @@ public class GameOfLifePinningTest {
 	}
 		for(int i=3;i<5;i++) {
 			for(int j=0;j<5;j++) {
-				assertFasle(boardCells[j][i].getAlive());
+				assertFalse(boardCells[j][i].getAlive());
 			}
 		}
 		panel.calculateNextIteration();
