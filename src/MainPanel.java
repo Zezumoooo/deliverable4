@@ -29,7 +29,6 @@ public class MainPanel extends JPanel {
 	}
 
 	public int getNumNeighbors(int x, int y) {
-		int size=size;
 		int leftX = (x - 1) % size;
 		int rightX = (x + 1) % size;
 		int upY = (y - 1) % size;
