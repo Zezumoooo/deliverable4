@@ -41,23 +41,19 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test2() {
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 5; j++) {
-			if (i==2&&j==1) {
-				assertTrue(panel.iterateCell(i,j));
-			}
-			else if (i==2&&i==2) {
-				assertTrue(panel.iterateCell(i,j));
-			}
-			else if (i==2&&i==3) {
-				assertTrue(panel.iterateCell(i,j));
-			}
-			else {
-				assertFalse(panel.iterateCell(i,j));
-			}
+			assertFalse(panel.iterateCell(i,j));
 		}
 	}
-	
+	for (int i = 0; i <=3; i++) {
+		assertTrue(panel.iterateCell(i,2));
+	}
+	for (int i = 3; i <5; i++) {
+		for (int j = 0; j <5; j++) {
+			assertFalse(panel.iterateCell(j,i));
+		}
+	}
 }
 @Test 
 	public void test3() {
