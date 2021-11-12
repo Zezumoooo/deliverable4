@@ -9,7 +9,7 @@ public class MainPanel extends JPanel {
 
 	// Backup configuration
 	private Cell[][] backupCells;
-
+	
 	private int size = 0;
 
 	private int maxCount = 50000000;
@@ -21,28 +21,31 @@ public class MainPanel extends JPanel {
 	public int getCellsSize() {
 		return size;
 	}
-
+	public void setCells(Cell[][] cells) {
+		_cells = cells;
+	}
 	public Cell[][] getCells() {
-		return cells;
+		return _cells;
 	}
 
 	public int getNumNeighbors(int x, int y) {
+		int size=size;
 		int leftX = (x - 1) % size;
 		int rightX = (x + 1) % size;
 		int upY = (y - 1) % size;
 		int downY = (y + 1) % size;
 
 		if (leftX == -1) {
-			leftX = size - 1;
+			leftX = size1 - 1;
 		}
 		if (rightX == -1) {
-			rightX = size - 1;
+			rightX = size1 - 1;
 		}
 		if (upY == -1) {
-			upY = size - 1;
+			upY = size1 - 1;
 		}
 		if (downY == -1) {
-			downY = size - 1;
+			downY = size1 - 1;
 		}
 
 		int numNeighbors = 0;
@@ -77,33 +80,27 @@ public class MainPanel extends JPanel {
 	}
 
 	public boolean iterateCell(int x, int y) {
-		String toReturn = "false";
-		boolean alive = cells[x][y].getAlive();
-		int numNeighbors = getNumNeighbors(x, y);
-		if (alive) {
-			if (numNeighbors < 2 || numNeighbors > 3) {
-				toReturn = "false";
-			} else {
-				toReturn = "true";
+		boolean reslut=false;
+		System.out.println(cells[x][y]);
+		boolean live=cells[x][y].getAlive();
+		int NumNeighbors=getNumNeighbors(x, y);
+		if (live) {
+			if (NumNeighbors<2||NumNeighbors>3) {
+				reslut=false;
 			}
-		} else {
-			if (numNeighbors == 3) {
-				toReturn = "true";
-			} else {
-				toReturn = "false";
+			else {
+				reslut=true;
 			}
 		}
-		
-		int c = 0;
-		String padding = "0";
-		while (c < r * 10) {
-			String l = new String("0");
-			padding += l;
-			c++;
+		else {
+			if (NumNeighbors==3) {
+				reslut=true;
+			}
+			else {
+				reslut=false;
+			}
 		}
-		toReturn = padding + toReturn;
-	
-		return Boolean.parseBoolean(toReturn.substring(padding.length()));
+		return reslut;
 	}
 
 	public void displayIteration(boolean[][] nextIter) {
