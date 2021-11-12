@@ -43,7 +43,7 @@ public class Cell extends JButton {
 			return".";
 		}
 	}
-
+	
 	public void setAlive(boolean a) {
 		// note that "if (a)" and "if (a == true)"
 		// really say the same thing!
