@@ -14,6 +14,7 @@ public class GameOfLifePinningTest {
 		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
+				boardCells[i][j]=Mockito.mock(Cell.class);
 				Mockito.when(boardCells[i][j].getAlive()).thenReturn(false);
 			}
 		}
