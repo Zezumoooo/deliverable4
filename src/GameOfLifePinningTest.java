@@ -1,8 +1,11 @@
 import org.junit.*;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
+import org.mockito.internal.util.reflection.FieldSetter;
+import org.mockito.runners.MockitoJUnitRunner;
+import java.lang.reflect.Field;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -25,7 +28,6 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test1() {
-	
 	panel.calculateNextIteration();
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 5; j++) {
