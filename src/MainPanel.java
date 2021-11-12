@@ -22,10 +22,10 @@ public class MainPanel extends JPanel {
 		return size;
 	}
 	public void setCells(Cell[][] cells) {
-		_cells = cells;
+		cells = cells;
 	}
 	public Cell[][] getCells() {
-		return _cells;
+		return cells;
 	}
 
 	public int getNumNeighbors(int x, int y) {
