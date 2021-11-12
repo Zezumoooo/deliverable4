@@ -1,20 +1,16 @@
 import org.junit.*;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.FieldSetter;
-import org.mockito.runners.MockitoJUnitRunner;
-import java.lang.reflect.Field;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class GameOfLifePinningTest {
 	MainPanel panel;
-	Cell[][] boardCells;
+	Cell[][] boardCells=new Cell[5][5];
 	@Before
 	public void setUp() {
-		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
 				Mockito.when(boardCells[i][j].getAlive()).thenReturn(false);
@@ -28,13 +24,12 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test1() {
-	panel.setCells(boardCells);
 	panel.calculateNextIteration();
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 5; j++) {
-			Mockito.verify(boardCells[i][j].setAlive(i==1&&j==2)||(i==2&&j==2)||(i==3&&j==2));
-		}
-	}
+	 for (int i = 0; i < 5; i++) {
+	  for (int j = 0; j < 5; j++) {
+	   Mockito.verify(boardCells[i][j].setAlive(i==1&&j==2)||(i==2&&j==2)||(i==3&&j==2));
+	  }
+	 }
 }
 @Test 
 	public void test2() {
@@ -64,5 +59,4 @@ public class GameOfLifePinningTest {
 	assertEquals(dead.toString(), ".");
 }
 	/* TODO: Write the three pinning unit tests for the three optimized methods */
-
 }
