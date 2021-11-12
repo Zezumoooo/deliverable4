@@ -16,13 +16,13 @@ public class GameOfLifePinningTest {
 		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
-				cell[i][j]=new Cell();
+				boardCells[i][j]=new Cell();
 			}
 		}
 		for(int j=1;j<=3;j++) {
-			cell[2][j].setAlive(true);
+			boardCells[2][j].setAlive(true);
 		}
-		panel.setCells(cell);
+		panel.setCells(boardCells);
 }
 @After
 	public void teardown() {
