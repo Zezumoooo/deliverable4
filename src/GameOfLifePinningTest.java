@@ -8,10 +8,9 @@ import static org.mockito.Mockito.*;
 
 public class GameOfLifePinningTest {
 	MainPanel panel;
+	Cell[][] boardCells=new Cell[5][5];
 	@Before
 	public void setUp() {
-		
-		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
 				Mockito.when(boardCells[i][j].getAlive()).thenReturn(false);
