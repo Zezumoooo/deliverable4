@@ -8,9 +8,10 @@ import static org.mockito.Mockito.*;
 
 public class GameOfLifePinningTest {
 	MainPanel panel;
-	Cell[][] boardCells=new Cell[5][5];
+	Cell[][] boardCells;
 	@Before
 	public void setUp() {
+		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
 				Mockito.when(boardCells[i][j].getAlive()).thenReturn(false);
@@ -24,34 +25,13 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test1() {
+	
 	panel.calculateNextIteration();
-	for(int i=0;i<2;i++) {
-		for(int j=0;j<5;j++) {
-			assertFalse(boardCells[j][i].getAlive());
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			Mockito.verify(boardCells[i][j].setAlive(i==1&&j==2)||(i==2&&j==2)||(i==3&&j==2));
 		}
 	}
-	for(int i=1;i<=3;i++) {
-		assertTrue(boardCells[i][2].getAlive());
-	}
-		for(int i=3;i<5;i++) {
-			for(int j=0;j<5;j++) {
-				assertFalse(boardCells[j][i].getAlive());
-			}
-		}
-		panel.calculateNextIteration();
-		for(int i=0;i<2;i++) {
-			for(int j=0;j<5;j++) {
-				assertFalse(boardCells[j][i].getAlive());
-			}
-		}
-		for(int i=1;i<=3;i++) {
-			assertTrue(boardCells[2][i].getAlive());
-		}
-		for(int i=3;i<5;i++) {
-			for(int j=0;j<5;j++) {
-				assertFalse(boardCells[j][i].getAlive());
-			}
-		}
 }
 @Test 
 	public void test2() {
