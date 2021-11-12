@@ -8,9 +8,10 @@ import static org.mockito.Mockito.*;
 
 public class GameOfLifePinningTest {
 	MainPanel panel;
-	Cell[][] boardCells=new Cell[5][5];
+	Cell[][] boardCells;
 	@Before
 	public void setUp() {
+		Cell[][] boardCells=new Cell[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j <5; j++) {
 				Mockito.when(boardCells[i][j].getAlive()).thenReturn(false);
@@ -24,6 +25,7 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test1() {
+	Cell[][] boardCells=new Cell[5][5];
 	panel.calculateNextIteration();
 	for(int i=0;i<2;i++) {
 		for(int j=0;j<5;j++) {
@@ -55,6 +57,7 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test2() {
+	Cell[][] boardCells=new Cell[5][5];
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 5; j++) {
 			if (i==2&&j==1) {
@@ -75,6 +78,7 @@ public class GameOfLifePinningTest {
 }
 @Test 
 	public void test3() {
+	Cell[][] boardCells=new Cell[5][5];
 	Cell alive=new Cell(true);
 	Cell dead=new Cell(false);
 	assertEquals(alive.toString(),"x");
